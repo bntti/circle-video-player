@@ -10,7 +10,7 @@ Plays various video formats using circles. Can also be used to play video from a
 ### Usage:
 
 To compile the program run: `make`  
-Usage: `./circle-video-player <args> <filename>`
+Usage: `./circle-player <args> <filename>`
 
 #### Runtime flags:
 
