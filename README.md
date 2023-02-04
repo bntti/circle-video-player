@@ -17,6 +17,7 @@ Usage: `./circle-player <args> <filename>`
 | Flag                     | Description                                                              |
 | ------------------------ | ------------------------------------------------------------------------ |
 | `-b <brightness>`        | Brightness factor (double).                                              |
+| `-c`                     | Enable color.                                                            |
 | `-h`                     | Show help menu and exit.                                                 |
 | `-r`                     | Use a larger radius for circles allowing for them to fully fill an area. |
 | `-s <target_pixel_size>` | Size of one 'pixel'. Use smaller number for more circles (integer).      |

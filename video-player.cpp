@@ -12,6 +12,7 @@ int main(int argc, char** argv) {
   int target_pixel_size = 10;
   bool full_rad = false;
   std::string filename = "";
+  bool color = false;
   bool help = false;
 
   // Manage arguments.
@@ -27,6 +28,9 @@ int main(int argc, char** argv) {
         case 'b':
           brightness = std::stod(argv[i + 1]);
           skip = true;
+          break;
+        case 'c':
+          color = true;
           break;
         case 'h':
           help = true;
@@ -50,6 +54,7 @@ int main(int argc, char** argv) {
     std::cout << "\n";
     std::cout << "Flags:\n";
     std::cout << "\t'-b <brightness>' | Brightness factor (double).\n";
+    std::cout << "\t'-c' | Enable color.\n";
     std::cout << "\t'-h' | Show this menu and exit.\n";
     std::cout << "\t'-r' | Use larger radius for circles allowing for them to "
                  "fully fill an area.\n";
@@ -114,6 +119,11 @@ int main(int argc, char** argv) {
         double g = frame.at<cv::Vec3b>(y, x)[1];
         double r = frame.at<cv::Vec3b>(y, x)[2];
         double val = brightness * (0.299 * r + 0.587 * g + 0.114 * b);
+        if (color) {
+          if ((x + y) % 3 == 0) val = r;
+          if ((x + y) % 3 == 1) val = b;
+          if ((x + y) % 3 == 2) val = g;
+        }
 
         // Calculate radius from grayscale value
         double newradius = std::min(1.0, val / 255.0) * radius;
@@ -121,7 +131,13 @@ int main(int argc, char** argv) {
           sf::CircleShape circle(newradius);
           circle.setPosition(sf::Vector2f(x * pixel_size + pixel_size / 2.0 - newradius,
                                           y * pixel_size + pixel_size / 2.0 - newradius));
-          circle.setFillColor(sf::Color(255, 255, 255));
+          if (color) {
+            if ((x + y) % 3 == 0) circle.setFillColor(sf::Color(255, 0, 0));
+            if ((x + y) % 3 == 1) circle.setFillColor(sf::Color(0, 255, 0));
+            if ((x + y) % 3 == 2) circle.setFillColor(sf::Color(0, 0, 255));
+          } else {
+            circle.setFillColor(sf::Color(255, 255, 255));
+          }
           window.draw(circle);
         }
       }
