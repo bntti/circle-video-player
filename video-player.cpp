@@ -63,10 +63,9 @@ int main(int argc, char** argv) {
     exit(0);
   }
 
-  std::string input_file = argv[1];
-  cv::VideoCapture cap(input_file);
+  cv::VideoCapture cap(filename);
   if (!cap.isOpened()) {
-    std::cout << "Error opening video stream or file '" << input_file << "'" << std::endl;
+    std::cout << "Error opening video stream or file '" << filename << "'" << std::endl;
     return 1;
   }
 
